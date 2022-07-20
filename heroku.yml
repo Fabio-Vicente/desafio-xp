@@ -1,0 +1,10 @@
+setup:
+  addons:
+    - plan: cleardb:ignite
+      as: DATABASE
+build:
+  docker:
+    web: Dockerfile
+release: yarn run refresh:db
+run:
+  web: yarn start;
