@@ -1,0 +1,24 @@
+on:
+  pull_request:
+    types: [opened, synchronize]
+
+jobs:
+  eslint:
+    runs-on: ubuntu-latest
+    steps:
+        - name: Verifica o repositório do Git
+          uses: actions/checkout@v2
+
+        - name: Instala o node com a versão
+          uses: actions/setup-node@v1
+          with:
+            node-version: 16
+        
+        - name: instalando as dependências
+          run: yarn install
+
+        - name: executando o lint para verificar se a erros
+          run: npx eslint .
+
+        - name: executando testes automatizados da aplicação
+          run: yarn test
