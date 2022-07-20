@@ -7,9 +7,14 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "prestart": "yarn tsc src/dist/server.ts",
-    "start": "node dist/server.ts",
+    "create:db": "npx sequelize-cli db:create",
+    "drop:db": "npx sequelize-cli db:drop",
     "dev": "nodemon --watch \"./src/**\" -ext \"ts, js\" --exec \"ts-node ./src/server.ts\"",
+    "migrate:db": "npx sequelize-cli db:migrate",
+    "prestart": "yarn tsc src/dist/server.ts",
+    "refresh:db": "yarn run migrate:db && yarn run seed:db",
+    "seed:db": "npx sequelize-cli db:seed:all",
+    "start": "node dist/server.ts",
     "test": "mocha --require ts-node/register ./tests/**/*$NAME*.spec.ts --exit"
   },
   "devDependencies": {
