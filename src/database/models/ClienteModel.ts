@@ -1,13 +1,22 @@
-import { Model, INTEGER, STRING, DECIMAL } from 'sequelize';
+import {
+  Model,
+  INTEGER,
+  STRING,
+  DECIMAL,
+} from 'sequelize';
 import db from '.';
-import CarteiraModel from './CarteiraModel'
+import CarteiraModel from './CarteiraModel';
 import OperacaoModel from './OperacoesModel';
 
 class ClienteModel extends Model {
   codCliente!: string;
+
   nome!: string;
+
   valor!: number;
+
   qtdeAtivo!: number;
+
   qtdeDisponivel!: number;
 }
 
@@ -17,7 +26,7 @@ ClienteModel.init({
     type: INTEGER,
   },
   nome: STRING(50),
-  saldo: DECIMAL(20,2),
+  saldo: DECIMAL(20, 2),
 }, {
   sequelize: db,
   modelName: 'Cliente',

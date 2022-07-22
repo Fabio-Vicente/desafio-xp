@@ -6,7 +6,7 @@ class OperacaoModel extends Model {
 }
 
 OperacaoModel.init({
-  valor: DECIMAL(20,2),
+  valor: DECIMAL(20, 2),
 }, {
   sequelize: db,
   modelName: 'Operacao',
