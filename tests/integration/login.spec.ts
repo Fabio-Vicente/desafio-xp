@@ -4,7 +4,7 @@ import { stub } from 'sinon';
 import jwt from 'jsonwebtoken';
 import { StatusCodes } from 'http-status-codes';
 import server from '../../src/app';
-import ClienteModel from '../../src';
+import { ClienteModel } from '../../src/database/models';
 import {
   usrToken,
   admToken,
@@ -39,9 +39,9 @@ let response;
 describe('Verifica se a realização de login pelo usuário', () => {
   context('quando realizada utilizando um usuário comum', () => {
     before(async () => {
-      response = await chai.request(server).post('/login').send(usrLogin);
       stub(jwt, 'sign').returns(usrToken);
       stub(ClienteModel, 'findOne').resolves(regularUser);
+      response = await chai.request(server).post('/login').send(usrLogin);
     });
 
     it('retorna o status 200-OK', () => {
@@ -62,9 +62,9 @@ describe('Verifica se a realização de login pelo usuário', () => {
 
   context('quando realizada utilizando um usuário administrador', () => {
     before(async () => {
-      response = await chai.request(server).post('/login').send(admLogin);
       stub(jwt, 'sign').returns(admToken);
       stub(ClienteModel, 'findOne').resolves(admUser);
+      response = await chai.request(server).post('/login').send(admLogin);
     });
 
     it('retorna o status 200-OK', () => {
@@ -187,8 +187,8 @@ describe('Verifica se a realização de login pelo usuário', () => {
 
   context('quando realizada com um um código de cliente inexistente', () => {
     before(async () => {
-      response = await chai.request(server).post('/login').send(notExistentLogin);
       stub(ClienteModel, 'findOne').resolves(notFoundUser);
+      response = await chai.request(server).post('/login').send(notExistentLogin);
     });
 
     it('retorna o status 401-UNAUTHORIZED', () => {
@@ -205,8 +205,8 @@ describe('Verifica se a realização de login pelo usuário', () => {
 
   context('quando a realizada com uma senha incorreta', () => {
     before(async () => {
-      response = await chai.request(server).post('/login').send(crackerLogin);
       stub(ClienteModel, 'findOne').resolves(notFoundUser);
+      response = await chai.request(server).post('/login').send(crackerLogin);
     });
 
     it('retorna o status 401-UNAUTHORIZED', () => {

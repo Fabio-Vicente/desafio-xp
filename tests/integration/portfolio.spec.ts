@@ -20,8 +20,8 @@ let response;
 describe('Verifica se a requisição para listagem de ativos do clientes ', () => {
   context('quando realizada de forma correta', () => {
     before(async () => {
-      response = await chai.request(server).get('/ativos/cliente/1').set('authorization', usrToken);
       stub(CarteiraModel, 'findAll').resolves(costumerAssets);
+      response = await chai.request(server).get('/ativos/cliente/1').set('authorization', usrToken);
     });
 
     after(() => {
@@ -84,8 +84,8 @@ describe('Verifica se a requisição para listagem de ativos do clientes ', () =
 
 describe('Verifica se a requisição para informações de um ativo', () => {
   before(async () => {
-    response = await chai.request(server).get('/ativos/XPBR31');
     stub(CarteiraModel, 'findOne').resolves(asset);
+    response = await chai.request(server).get('/ativos/XPBR31');
   });
 
   after(() => {

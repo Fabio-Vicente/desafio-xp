@@ -10,59 +10,64 @@ const notFoundUser = null;
 
 const regularUser = {
   codCliente: 1,
-  password: 'menteaberta',
-  role: 'usuário',
+  senha: 'menteaberta',
+  funcao: 'usuário',
 };
 
 const admUser = {
   codCliente: 2,
-  password: 'espiritoinovador',
-  role: 'administrador',
+  senha: 'espiritoinovador',
+  funcao: 'administrador',
 };
 
 const usrLogin = {
   codCliente: 1,
-  password: 'menteaberta',
+  senha: 'menteaberta',
 };
 
 const admLogin = {
   codCliente: 2,
-  password: 'espiritoinovador',
+  senha: 'espiritoinovador',
+};
+
+const wrongLogin = {
+  codCliente: 3,
+  senha: 'nopassword',
 };
 
 const noInfoLogin = {};
 
 const noCodClienteLogin = {
-  password: 'menteaberta',
+  senha: 'menteaberta',
 };
 
 const noPassworLogin = {
   codCliente: 1,
 };
 
-const wrongCodLogin = {
+const invalidCodLogin = {
   codCliente: '1',
-  password: 'menteaberta',
+  senha: 'menteaberta',
 };
 
-const wrongPasswordLogin = {
+const invalidPasswordLogin = {
   codCliente: 1,
-  password: 12345678,
+  senha: 12345678,
 };
 
 const shortPasswordLogin = {
   codCliente: 1,
-  password: 'xpinc',
+  senha: 'xpinc',
 };
 
 const notExistentLogin = {
   codCliente: 3,
-  password: 'deixarpradepois',
+  senha: 'deixarpradepois',
 };
 
 const crackerLogin = {
   codCliente: 4,
-  password: 'naoconfiavel',
+  senha: 'naoconfiavel',
 };
 
 export {
@@ -75,11 +80,12 @@ export {
   admUser,
   usrLogin,
   admLogin,
+  wrongLogin,
   noInfoLogin,
   noCodClienteLogin,
   noPassworLogin,
-  wrongCodLogin,
-  wrongPasswordLogin,
+  invalidCodLogin,
+  invalidPasswordLogin,
   shortPasswordLogin,
   notExistentLogin,
   crackerLogin,
