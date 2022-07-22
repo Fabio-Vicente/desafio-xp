@@ -81,7 +81,7 @@ describe('Verifica se a realização de login pelo usuário', () => {
     });
   });
 
-  context('quando realizada sem dados de usuário', () => {
+  context('quando realizada sem a informação do cliente', () => {
     before(async () => {
       response = await chai.request(server).post('/login').send(noInfoLogin);
     });
