@@ -6,8 +6,10 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      nome: {
-        type: Sequelize.STRING(50),
+      nome: Sequelize.STRING(50),
+      senha: Sequelize.STRING(30),
+      funcao: {
+        type: Sequelize.ENUM('usuário', 'administrador'),
       },
       saldo: {
         allowNull: false,

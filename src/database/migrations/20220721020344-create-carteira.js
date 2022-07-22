@@ -11,23 +11,21 @@ module.exports = {
           model: 'Clientes',
           key: 'cod_cliente',
         },
-        unique: 'id',
       },
-      id_ativo: {
+      cod_ativo: {
         primaryKey: true,
         allowNull: false,
-        type: Sequelize.INTEGER,
+        type: Sequelize.STRING(6),
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
         references: {
           model: 'Ativos',
-          key: 'id',
+          key: 'cod_ativo',
         },
-        unique: 'id',
       },
-      valor: {
+      qtde: {
         allowNull: false,
-        type: Sequelize.DECIMAL(20, 2),
+        type: Sequelize.BIGINT,
       },
     });
   },

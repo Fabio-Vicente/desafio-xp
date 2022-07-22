@@ -10,9 +10,9 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE,
       },
-      valor: {
+      qtde: {
         allowNull: false,
-        type: Sequelize.DECIMAL(20, 2),
+        type: Sequelize.BIGINT,
       },
       cod_cliente: {
         allowNull: false,
@@ -24,14 +24,14 @@ module.exports = {
           key: 'cod_cliente',
         },
       },
-      id_ativo: {
+      cod_ativo: {
         allowNull: false,
-        type: Sequelize.INTEGER,
+        type: Sequelize.STRING(6),
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
         references: {
           model: 'Ativos',
-          key: 'id',
+          key: 'cod_ativo',
         },
       },
     });
