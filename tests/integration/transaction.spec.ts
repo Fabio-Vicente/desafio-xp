@@ -21,7 +21,7 @@ import {
   availableAssets,
   unavailableAssets,
   unsuficientPortfolio,
-} from '../mocks/transactions';
+} from '../mocks/transaction';
 
 const {
   CREATED,
@@ -61,28 +61,27 @@ describe('Verifica se a requisição da compra de um ativo', () => {
       expect(response).to.have.status(CREATED);
     });
 
-    it('retorna uma resposta com o id da operação e o valor atualizado do ativo na carteira', () => {
+    it('retorna uma resposta com o id da operação e a quantidade atualizada do ativo na carteira', () => {
       expect(response.body).to.be.an('object');
       expect(response.body).to.have.property('id');
-      expect(response.body).to.have.property('updatedValue');
+      expect(response.body).to.have.property('qtde');
       expect(response.body).to.be.deep.equal({
         id: 2,
-        updatedValue: 1_523.45,
         qtde: 15,
       });
     });
 
-    it('atualiza o valor na tabela de carteira', () => {
+    it('atualiza a quantidade na tabela de carteira', () => {
       expect(CarteiraModel.update.calledWithMatch({
-        valor: 1_523.45, qtde: 15,
+        qtde: 15,
       }, {
         where: { cod_cliente: 1, cod_ativo: 'XPBR31' },
       })).equals(true);
     });
 
-    it('atualiza o valor na tabela de ativos', () => {
+    it('atualiza a quantidade disponível na tabela de ativos', () => {
       expect(AtivoModel.update.calledWithMatch({
-        valor: 476.55, qtde: 5,
+        qtdeDisponivel: 5,
       }, {
         where: { cod_ativo: 'XPBR31' },
       })).equals(true);
@@ -114,13 +113,11 @@ describe('Verifica se a requisição da compra de um ativo', () => {
       expect(response).to.have.status(CREATED);
     });
 
-    it('retorna uma resposta com o id da operação e o valor atualizado do ativo na carteira', () => {
+    it('retorna uma resposta com o id da operação e a quantidade atualizada do ativo na carteira', () => {
       expect(response.body).to.be.an('object');
       expect(response.body).to.have.property('id');
-      expect(response.body).to.have.property('updatedValue');
       expect(response.body).to.be.deep.equal({
         id: 2,
-        updatedValue: 523.45,
         qtde: 5,
       });
     });
@@ -130,14 +127,13 @@ describe('Verifica se a requisição da compra de um ativo', () => {
     expect(CarteiraModel.create.calledWithMatch({
       codCliente: 1,
       codAtivo: 'XPBR31',
-      valor: 523.45,
       qtde: 5,
     })).equals(true);
   });
 
-  it('atualiza o valor na tabela de ativos', () => {
+  it('atualiza a quantidade na tabela de ativos', () => {
     expect(AtivoModel.update.calledWithMatch({
-      valor: 476.55, qtde: 5,
+      qtdeDisponivel: 5,
     }, {
       where: { cod_ativo: 'XPBR31' },
     })).equals(true);
@@ -234,14 +230,14 @@ describe('Verifica se a requisição da compra de um ativo', () => {
         .send(noQtdeTransaction);
     });
 
-    it('retorna o status 401-BAD REQUEST', () => {
+    it('retorna o status 400-BAD REQUEST', () => {
       expect(response).to.have.status(BAD_REQUEST);
     });
 
     it('retorna uma resposta com a mensagem "A requisição deve ter um \'header\' de autorização"', () => {
       expect(response.body).to.be.an('object');
       expect(response.body).to.have.property('message');
-      expect(response.body).to.be.deep.equal({ message: 'Quantidade do ativo não informado' });
+      expect(response.body).to.be.deep.equal({ message: 'A requisição deve ter um \'header\' de autorização' });
     });
   });
 
@@ -291,28 +287,27 @@ describe('Verifica se a requisição da venda de um ativo', () => {
       expect(response).to.have.status(CREATED);
     });
 
-    it('retorna uma resposta com o id da operação e o valor atualizado do ativo na carteira', () => {
+    it('retorna uma resposta com o id da operação e a quantidade atualizada do ativo na carteira', () => {
       expect(response.body).to.be.an('object');
       expect(response.body).to.have.property('id');
-      expect(response.body).to.have.property('updatedValue');
+      expect(response.body).to.have.property('qtde');
       expect(response.body).to.be.deep.equal({
         id: 2,
-        updatedValue: 476.55,
         qtde: 5,
       });
     });
 
-    it('atualiza o valor na tabela de carteira', () => {
+    it('atualiza a quantidade na carteira', () => {
       expect(CarteiraModel.update.calledWithMatch({
-        valor: 476.55, qtde: 5,
+        qtde: 5,
       }, {
         where: { cod_cliente: 1, cod_ativo: 'XPBR31' },
       })).equals(true);
     });
 
-    it('atualiza o valor na tabela de ativos', () => {
+    it('atualiza a quantidade na tabela de ativos', () => {
       expect(AtivoModel.update.calledWithMatch({
-        valor: 1526.5, qtde: 15,
+        qtdeDisponivel: 15,
       }, {
         where: { cod_ativo: 'XPBR31' },
       })).equals(true);
@@ -444,7 +439,7 @@ describe('Verifica se a requisição da venda de um ativo', () => {
     it('retorna uma resposta com a mensagem "A requisição deve ter um \'header\' de autorização"', () => {
       expect(response.body).to.be.an('object');
       expect(response.body).to.have.property('message');
-      expect(response.body).to.be.deep.equal({ message: 'Quantidade do ativo não informado' });
+      expect(response.body).to.be.deep.equal({ message: 'A requisição deve ter um \'header\' de autorização' });
     });
   });
 
