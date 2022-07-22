@@ -65,6 +65,8 @@ describe('Verifica se a requisição da compra de um ativo', () => {
       expect(response.body).to.be.an('object');
       expect(response.body).to.have.property('id');
       expect(response.body).to.have.property('qtde');
+      expect(response.body.id).to.be.a('number');
+      expect(response.body.qtde).to.be.a('number');
       expect(response.body).to.be.deep.equal({
         id: 2,
         qtde: 15,
@@ -116,6 +118,9 @@ describe('Verifica se a requisição da compra de um ativo', () => {
     it('retorna uma resposta com o id da operação e a quantidade atualizada do ativo na carteira', () => {
       expect(response.body).to.be.an('object');
       expect(response.body).to.have.property('id');
+      expect(response.body).to.have.property('qtde');
+      expect(response.body.id).to.be.a('number');
+      expect(response.body.qtde).to.be.a('number');
       expect(response.body).to.be.deep.equal({
         id: 2,
         qtde: 5,
@@ -158,6 +163,7 @@ describe('Verifica se a requisição da compra de um ativo', () => {
     it('retorna uma resposta com o id da operação e o valor atualizado do ativo na carteira', () => {
       expect(response.body).to.be.an('object');
       expect(response.body).to.have.property('messages');
+      expect(response.body.message).to.be.a('string');
       expect(response.body).to.be.deep.equal({ message: 'não há ativos suficientes para compra' });
     });
   });
@@ -178,6 +184,7 @@ describe('Verifica se a requisição da compra de um ativo', () => {
     it('retorna uma resposta com a mensagem "Código do cliente não informado"', () => {
       expect(response.body).to.be.an('object');
       expect(response.body).to.have.property('message');
+      expect(response.body.message).to.be.a('string');
       expect(response.body).to.be.deep.equal({ message: 'Código do cliente não informado' });
     });
   });
@@ -198,6 +205,7 @@ describe('Verifica se a requisição da compra de um ativo', () => {
     it('retorna uma resposta com a mensagem "Código do ativo não informado"', () => {
       expect(response.body).to.be.an('object');
       expect(response.body).to.have.property('message');
+      expect(response.body.message).to.be.a('string');
       expect(response.body).to.be.deep.equal({ message: 'Código do ativo não informado' });
     });
   });
@@ -218,6 +226,7 @@ describe('Verifica se a requisição da compra de um ativo', () => {
     it('retorna uma resposta com a mensagem "Quantidade do ativo não informado"', () => {
       expect(response.body).to.be.an('object');
       expect(response.body).to.have.property('message');
+      expect(response.body.message).to.be.a('string');
       expect(response.body).to.be.deep.equal({ message: 'Quantidade do ativo não informado' });
     });
   });
@@ -237,6 +246,7 @@ describe('Verifica se a requisição da compra de um ativo', () => {
     it('retorna uma resposta com a mensagem "A requisição deve ter um \'header\' de autorização"', () => {
       expect(response.body).to.be.an('object');
       expect(response.body).to.have.property('message');
+      expect(response.body.message).to.be.a('string');
       expect(response.body).to.be.deep.equal({ message: 'A requisição deve ter um \'header\' de autorização' });
     });
   });
@@ -257,6 +267,7 @@ describe('Verifica se a requisição da compra de um ativo', () => {
     it('retorna uma resposta com a mensagem "Este usuário não tem permissão para fazer essa operação"', () => {
       expect(response.body).to.be.an('object');
       expect(response.body).to.have.property('message');
+      expect(response.body.message).to.be.a('string');
       expect(response.body).to.be.deep.equal({ message: 'Este usuário não tem permissão para fazer essa operação' });
     });
   });
@@ -291,6 +302,8 @@ describe('Verifica se a requisição da venda de um ativo', () => {
       expect(response.body).to.be.an('object');
       expect(response.body).to.have.property('id');
       expect(response.body).to.have.property('qtde');
+      expect(response.body.id).to.be('number');
+      expect(response.body.qtde).to.be('number');
       expect(response.body).to.be.deep.equal({
         id: 2,
         qtde: 5,
@@ -335,6 +348,7 @@ describe('Verifica se a requisição da venda de um ativo', () => {
     it('retorna uma resposta com a messagem "Esse ativo não existe na carteira do cliente', () => {
       expect(response.body).to.be.an('object');
       expect(response.body).to.have.property('message');
+      expect(response.body.message).to.be.a('string');
       expect(response.body).to.be.deep.equal({ message: 'Esse ativo não exite na carteira do cliente' });
     });
   });
@@ -360,6 +374,7 @@ describe('Verifica se a requisição da venda de um ativo', () => {
     it('retorna uma resposta com a messagem "Não existe ativos suficientes na carteira do cliente para essa operação', () => {
       expect(response.body).to.be.an('object');
       expect(response.body).to.have.property('message');
+      expect(response.body.message).to.be.a('string');
       expect(response.body).to.be.deep.equal({ message: 'Não existe ativos suficientes na carteira do cliente para essa operação' });
     });
   });
@@ -380,6 +395,7 @@ describe('Verifica se a requisição da venda de um ativo', () => {
     it('retorna uma resposta com a mensagem "Código do cliente não informado"', () => {
       expect(response.body).to.be.an('object');
       expect(response.body).to.have.property('message');
+      expect(response.body.message).to.be.a('string');
       expect(response.body).to.be.deep.equal({ message: 'Código do cliente não informado' });
     });
   });
@@ -400,6 +416,7 @@ describe('Verifica se a requisição da venda de um ativo', () => {
     it('retorna uma resposta com a mensagem "Código do ativo não informado"', () => {
       expect(response.body).to.be.an('object');
       expect(response.body).to.have.property('message');
+      expect(response.body.message).to.be.a('string');
       expect(response.body).to.be.deep.equal({ message: 'Código do ativo não informado' });
     });
   });
@@ -420,6 +437,7 @@ describe('Verifica se a requisição da venda de um ativo', () => {
     it('retorna uma resposta com a mensagem "Quantidade do ativo não informado"', () => {
       expect(response.body).to.be.an('object');
       expect(response.body).to.have.property('message');
+      expect(response.body.message).to.be.a('string');
       expect(response.body).to.be.deep.equal({ message: 'Quantidade do ativo não informado' });
     });
   });
@@ -439,6 +457,7 @@ describe('Verifica se a requisição da venda de um ativo', () => {
     it('retorna uma resposta com a mensagem "A requisição deve ter um \'header\' de autorização"', () => {
       expect(response.body).to.be.an('object');
       expect(response.body).to.have.property('message');
+      expect(response.body.message).to.be.a('string');
       expect(response.body).to.be.deep.equal({ message: 'A requisição deve ter um \'header\' de autorização' });
     });
   });
@@ -459,6 +478,7 @@ describe('Verifica se a requisição da venda de um ativo', () => {
     it('retorna uma resposta com a mensagem "Este usuário não tem permissão para fazer essa operação"', () => {
       expect(response.body).to.be.an('object');
       expect(response.body).to.have.property('message');
+      expect(response.body.message).to.be.a('string');
       expect(response.body).to.be.deep.equal({ message: 'Este usuário não tem permissão para fazer essa operação' });
     });
   });

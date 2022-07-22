@@ -40,6 +40,10 @@ describe('Verifica se a requisição para listagem de ativos do clientes ', () =
       expect(response.body[0]).to.have.property('codAtivo');
       expect(response.body[0]).to.have.property('qtdeAtivo');
       expect(response.body[0]).to.have.property('valor');
+      expect(response.body[0].codCliente).to.have.property('number');
+      expect(response.body[0].codAtivo).to.have.property('number');
+      expect(response.body[0].qtdeAtivo).to.have.property('number');
+      expect(response.body[0].valor).to.have.property('number');
     });
   });
 
@@ -55,6 +59,7 @@ describe('Verifica se a requisição para listagem de ativos do clientes ', () =
     it('retorna uma resposta com a mensagem "A requisição deve ter um \'header\' de autorização"', () => {
       expect(response.body).to.be.an('object');
       expect(response.body).to.have.property('message');
+      expect(response.body.message).to.be('string');
       expect(response.body).to.be.deep.equal({ message: 'A requisição deve ter um \'header\' de autorização' });
     });
   });
@@ -71,6 +76,7 @@ describe('Verifica se a requisição para listagem de ativos do clientes ', () =
     it('retorna uma resposta com a mensagem "Este usuário não tem permissão para fazer essa operação"', () => {
       expect(response.body).to.be.an('object');
       expect(response.body).to.have.property('message');
+      expect(response.body.message).to.be('string');
       expect(response.body).to.be.deep.equal({ message: 'Este usuário não tem permissão para fazer essa operação' });
     });
   });
@@ -96,6 +102,9 @@ describe('Verifica se a requisição para informações de um ativo', () => {
     expect(response.body).to.have.property('codAtivo');
     expect(response.body).to.have.property('qtdeAtivo');
     expect(response.body).to.have.property('valor');
+    expect(response.body.codAtivo).to.have.property('number');
+    expect(response.body.qtdeAtivo).to.have.property('number');
+    expect(response.body.valor).to.have.property('number');
 
     expect(response.body).to.be.deep.equal({
       codAtivo: 'XPBR31',

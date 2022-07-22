@@ -16,8 +16,8 @@ import {
   noInfoLogin,
   noCodClienteLogin,
   noPassworLogin,
-  wrongCodLogin,
-  wrongPasswordLogin,
+  invalidCodLogin,
+  invalidPasswordLogin,
   shortPasswordLogin,
   notExistentLogin,
   crackerLogin,
@@ -51,6 +51,7 @@ describe('Verifica se a realização de login pelo usuário', () => {
     it('retorna uma resposta com um token válido', () => {
       expect(response.body).to.be.an('object');
       expect(response.body).to.have.property('token');
+      expect(response.body.token).to.be.a('string');
       expect(response.body).to.be.deep.equal({ token: usrToken });
     });
 
@@ -73,6 +74,7 @@ describe('Verifica se a realização de login pelo usuário', () => {
     it('retorna uma resposta com um token válido', () => {
       expect(response.body).to.be.an('object');
       expect(response.body).to.have.property('token');
+      expect(response.body.token).to.be.a('string');
       expect(response.body).to.be.deep.equal({ token: admToken });
     });
 
@@ -93,6 +95,7 @@ describe('Verifica se a realização de login pelo usuário', () => {
     it('retorna a mensagem "Cliente não informado"', () => {
       expect(response.body).to.be.an('object');
       expect(response.body).to.have.property('message');
+      expect(response.body.message).to.be.a('string');
       expect(response.body).to.be.deep.equal({ message: 'Cliente não informado' });
     });
   });
@@ -109,6 +112,7 @@ describe('Verifica se a realização de login pelo usuário', () => {
     it('retorna a mensagem "Cliente não informado"', () => {
       expect(response.body).to.be.an('object');
       expect(response.body).to.have.property('message');
+      expect(response.body.message).to.be.a('string');
       expect(response.body).to.be.deep.equal({ message: 'Cliente não informado' });
     });
   });
@@ -125,13 +129,14 @@ describe('Verifica se a realização de login pelo usuário', () => {
     it('retorna a mensagem "Senha não informada"', () => {
       expect(response.body).to.be.an('object');
       expect(response.body).to.have.property('message');
+      expect(response.body.message).to.be.a('string');
       expect(response.body).to.be.deep.equal({ message: 'Senha não informada' });
     });
   });
 
   context('quando realizada com um código de cliente inválido', () => {
     before(async () => {
-      response = await chai.request(server).post('/login').send(wrongCodLogin);
+      response = await chai.request(server).post('/login').send(invalidCodLogin);
     });
 
     it('retorna o status 422-UNPROCESSABLE ENTITY', () => {
@@ -141,13 +146,14 @@ describe('Verifica se a realização de login pelo usuário', () => {
     it('retorna a mensagem "Formato de cliente inválido."', () => {
       expect(response.body).to.be.an('object');
       expect(response.body).to.have.property('message');
+      expect(response.body.message).to.be.a('string');
       expect(response.body).to.be.deep.equal({ message: 'Formato de cliente inválido.' });
     });
   });
 
   context('quando realizada com uma senha inválida', () => {
     before(async () => {
-      response = await chai.request(server).post('/login').send(wrongPasswordLogin);
+      response = await chai.request(server).post('/login').send(invalidPasswordLogin);
     });
 
     it('retorna o status 422-UNPROCESSABLE ENTITY', () => {
@@ -157,6 +163,7 @@ describe('Verifica se a realização de login pelo usuário', () => {
     it('retorna a mensagem "Formato de senha inválido."', () => {
       expect(response.body).to.be.an('object');
       expect(response.body).to.have.property('message');
+      expect(response.body.message).to.be.a('string');
       expect(response.body).to.be.deep.equal({ message: 'Formato de senha inválido.' });
     });
   });
@@ -173,6 +180,7 @@ describe('Verifica se a realização de login pelo usuário', () => {
     it('retorna a mensagem "A senha deve ter mais de 8 caracteres"', () => {
       expect(response.body).to.be.an('object');
       expect(response.body).to.have.property('message');
+      expect(response.body.message).to.be.a('string');
       expect(response.body).to.be.deep.equal({ message: 'A senha deve ter mais de 8 caracteres' });
     });
   });
@@ -190,6 +198,7 @@ describe('Verifica se a realização de login pelo usuário', () => {
     it('retorna a mensagem "Usuário ou senha não conferem"', () => {
       expect(response.body).to.be.an('object');
       expect(response.body).to.have.property('message');
+      expect(response.body.message).to.be.a('string');
       expect(response.body).to.be.deep.equal({ message: 'Usuário ou senha não conferem' });
     });
   });
@@ -207,6 +216,7 @@ describe('Verifica se a realização de login pelo usuário', () => {
     it('retorna a mensagem "Usuário ou senha não conferem"', () => {
       expect(response.body).to.be.an('object');
       expect(response.body).to.have.property('message');
+      expect(response.body.message).to.be.a('string');
       expect(response.body).to.be.deep.equal({ message: 'Senha incorreta' });
     });
   });

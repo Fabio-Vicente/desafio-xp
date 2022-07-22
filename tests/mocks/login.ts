@@ -4,15 +4,19 @@ const admToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjb2RDbGllbnRlIjoyLCJyb
 
 const invalidToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjb2RDbGllbnRlIjoxLCJyb2xlIjoidXN1w6FyaW8ifQ.WnLelf6C_Su7bL42QgVvj_PhvoqQ_ytlxxCl-80om4';
 
+const anotherUser = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjb2RDbGllbnRlIjoyLCJyb2xlIjoidXN1w6FyaW8ifQ.GvLy70kpVS9EviqrZm8skDD1fPKRT9QBLT3JnraHZTk';
+
 const notFoundUser = null;
 
 const regularUser = {
   codCliente: 1,
+  password: 'menteaberta',
   role: 'usuário',
 };
 
 const admUser = {
   codCliente: 2,
+  password: 'espiritoinovador',
   role: 'administrador',
 };
 
@@ -65,6 +69,7 @@ export {
   usrToken,
   admToken,
   invalidToken,
+  anotherUser,
   notFoundUser,
   regularUser,
   admUser,
