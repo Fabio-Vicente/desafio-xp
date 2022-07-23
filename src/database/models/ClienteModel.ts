@@ -1,23 +1,26 @@
 import {
   Model,
+  DECIMAL,
+  ENUM,
   INTEGER,
   STRING,
-  DECIMAL,
 } from 'sequelize';
-import db from '.';
+import db from '..';
+
+import { ICliente } from '../../interfaces';
 import CarteiraModel from './CarteiraModel';
 import OperacaoModel from './OperacoesModel';
 
-class ClienteModel extends Model {
-  codCliente!: string;
+class ClienteModel extends Model implements ICliente {
+  codCliente!: number;
 
   nome!: string;
 
-  valor!: number;
+  senha!: string;
 
-  qtdeAtivo!: number;
+  funcao!: string;
 
-  qtdeDisponivel!: number;
+  saldo!: number;
 }
 
 ClienteModel.init({
@@ -26,6 +29,8 @@ ClienteModel.init({
     type: INTEGER,
   },
   nome: STRING(50),
+  senha: STRING(30),
+  funcao: ENUM('usuario, administrador'),
   saldo: DECIMAL(20, 2),
 }, {
   sequelize: db,
@@ -34,10 +39,10 @@ ClienteModel.init({
   timestamps: false,
 });
 
-CarteiraModel.belongsTo(ClienteModel, { foreignKey: 'id_cliente', as: 'Carteira' });
-OperacaoModel.belongsTo(ClienteModel, { foreignKey: 'id_cliente', as: 'Operacoes' });
+CarteiraModel.belongsTo(ClienteModel, { foreignKey: 'id_cliente', as: 'Cliente' });
+OperacaoModel.belongsTo(ClienteModel, { foreignKey: 'id_cliente', as: 'Cliente' });
 
-ClienteModel.hasMany(CarteiraModel, { foreignKey: 'id_cliente', as: 'Carteira' });
+ClienteModel.hasMany(CarteiraModel, { foreignKey: 'id_cliente', as: 'Carteiras' });
 ClienteModel.hasMany(OperacaoModel, { foreignKey: 'id_cliente', as: 'Operacoes' });
 
 export default ClienteModel;

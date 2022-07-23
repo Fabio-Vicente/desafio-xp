@@ -1,4 +1,11 @@
-import { Sequelize } from 'sequelize';
-import * as config from '../config/database';
+import AtivoModel from './AtivoModel';
+import ClienteModel from './ClienteModel';
+import CarteiraModel from './CarteiraModel';
+import OperacaoModel from './OperacoesModel';
 
-export default new Sequelize(config);
+export {
+  AtivoModel,
+  ClienteModel,
+  CarteiraModel,
+  OperacaoModel,
+};

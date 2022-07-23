@@ -1,3 +1,8 @@
-import { login } from './login';
+import { ILogin, loginReturn } from './login';
+import { ICliente } from './cliente';
 
-export default login;
+export {
+  ILogin,
+  loginReturn,
+  ICliente,
+};

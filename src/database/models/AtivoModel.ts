@@ -1,7 +1,7 @@
 import {
-  Model, INTEGER, STRING, DECIMAL,
+  Model, STRING, DECIMAL, BIGINT,
 } from 'sequelize';
-import db from '.';
+import db from '..';
 import CarteiraModel from './CarteiraModel';
 import OperacaoModel from './OperacoesModel';
 
@@ -18,11 +18,11 @@ class AtivoModel extends Model {
 }
 
 AtivoModel.init({
-  codAtivo: STRING(5),
+  codAtivo: STRING(6),
   nome: STRING(30),
   valor: DECIMAL(20, 2),
-  qtdeAtivo: INTEGER,
-  qtdeDisponivel: INTEGER,
+  qtdeAtivo: BIGINT,
+  qtdeDisponivel: BIGINT,
 }, {
   sequelize: db,
   modelName: 'Ativo',
@@ -30,10 +30,10 @@ AtivoModel.init({
   timestamps: false,
 });
 
-CarteiraModel.belongsTo(AtivoModel, { foreignKey: 'id_ativo', as: 'Carteira' });
-OperacaoModel.belongsTo(AtivoModel, { foreignKey: 'id_ativo', as: 'Operacoes' });
+CarteiraModel.belongsTo(AtivoModel, { foreignKey: 'id_ativo', as: 'Ativo' });
+OperacaoModel.belongsTo(AtivoModel, { foreignKey: 'id_ativo', as: 'Ativo' });
 
-AtivoModel.hasMany(CarteiraModel, { foreignKey: 'id_ativo', as: 'Carteira' });
+AtivoModel.hasMany(CarteiraModel, { foreignKey: 'id_ativo', as: 'Carteiras' });
 AtivoModel.hasMany(OperacaoModel, { foreignKey: 'id_ativo', as: 'Operacoes' });
 
 export default AtivoModel;
