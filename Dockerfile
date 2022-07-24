@@ -2,7 +2,7 @@ FROM node:16-alpine as build-stage
 WORKDIR /server
 COPY package.json .
 RUN yarn install
-COPY ./src .
+COPY . .
 CMD ["yarn", "build"]
 
 FROM node:16-alpine
