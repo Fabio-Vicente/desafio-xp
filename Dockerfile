@@ -6,9 +6,9 @@ COPY package.json .
 
 RUN yarn install
 
-COPY . .
+COPY ./src .
 
-CMD ["yarn", "prestart"]
+CMD ["yarn", "build"]
 
 FROM node:16-alpine
 
