@@ -16,6 +16,7 @@ export default class ClienteController {
   ) {
     this.service = service;
     this.validator = validator;
+    this.login = this.login.bind(this);
   }
 
   async login(req: Request, res: Response, next: NextFunction): Promise<void> {

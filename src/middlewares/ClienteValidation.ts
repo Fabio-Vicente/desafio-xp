@@ -7,6 +7,7 @@ export default class {
 
   constructor(schema: Schema = loginSchema) {
     this.schema = schema;
+    this.verifyLogin = this.verifyLogin.bind(this);
   }
 
   public verifyLogin(req: Request, _res: Response, next: NextFunction): void {

@@ -34,7 +34,7 @@ ClienteModel.init({
   saldo: DECIMAL(20, 2),
 }, {
   sequelize: db,
-  modelName: 'Cliente',
+  tableName: 'Clientes',
   underscored: true,
   timestamps: false,
 });
