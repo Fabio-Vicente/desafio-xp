@@ -1,9 +1,9 @@
 import { expect } from 'chai';
 import { SinonStub, stub } from 'sinon';
 import jwt from 'jsonwebtoken';
-import { ClienteService } from '../../src/services';
-import { ClienteModel } from '../../src/database/models';
-import { ILogin } from '../../src/interfaces';
+import { ClienteService } from '../../../src/services';
+import { ClienteModel } from '../../../src/database/models';
+import { ILogin } from '../../../src/interfaces';
 import {
   noInfoLogin,
   notFoundUser,
@@ -11,9 +11,7 @@ import {
   usrLogin,
   usrToken,
   wrongLogin,
-} from '../mocks/login';
-
-console.log(typeof jwt);
+} from '../../mocks/login';
 
 describe('Verifica se o serviço de login', () => {
   const service = new ClienteService();
@@ -21,6 +19,7 @@ describe('Verifica se o serviço de login', () => {
   context('quando o cliente e senha informados estão corretos', () => {
     before(() => {
       stub(jwt, 'sign').returns(usrToken as unknown as void);
+      // ! There is a mistake on @types/jsonwebtoken that was reported by the issue: https://github.com/DefinitelyTyped/DefinitelyTyped/discussions/61434
       stub(ClienteModel, 'findOne').resolves(regularUser as ClienteModel);
     });
 

@@ -143,11 +143,11 @@ describe('Verifica se a realização de login pelo usuário', () => {
       expect(response).to.have.status(UNPROCESSABLE_ENTITY);
     });
 
-    it('retorna a mensagem "Formato de cliente inválido."', () => {
+    it('retorna a mensagem "Formato de cliente inválido"', () => {
       expect(response.body).to.be.an('object');
       expect(response.body).to.have.property('message');
       expect(response.body.message).to.be.a('string');
-      expect(response.body).to.be.deep.equal({ message: 'Formato de cliente inválido.' });
+      expect(response.body).to.be.deep.equal({ message: 'Formato de cliente inválido' });
     });
   });
 
@@ -164,7 +164,7 @@ describe('Verifica se a realização de login pelo usuário', () => {
       expect(response.body).to.be.an('object');
       expect(response.body).to.have.property('message');
       expect(response.body.message).to.be.a('string');
-      expect(response.body).to.be.deep.equal({ message: 'Formato de senha inválido.' });
+      expect(response.body).to.be.deep.equal({ message: 'Formato de senha inválido' });
     });
   });
 
