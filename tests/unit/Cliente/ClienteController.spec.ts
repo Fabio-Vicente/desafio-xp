@@ -1,34 +1,21 @@
 import { expect } from 'chai';
 import { SinonStub, stub } from 'sinon';
+import { request, response } from 'express';
 import { StatusCodes } from 'http-status-codes';
 import { ClienteController } from '../../../src/controllers';
 import ClienteService from '../../../src/services';
-import {
-  invalidCodLogin,
-  invalidPasswordLogin,
-  noCodClienteLogin,
-  noPassworLogin,
-  shortPasswordLogin,
-  usrLogin,
-  usrToken,
-  wrongLogin,
-} from '../../mocks/login';
+import { usrLogin, usrToken, wrongLogin } from '../../mocks/login';
 
-const {
-  OK,
-  BAD_REQUEST,
-  UNAUTHORIZED,
-  UNPROCESSABLE_ENTITY,
-} = StatusCodes;
+const { OK, UNAUTHORIZED } = StatusCodes;
 
 describe('Verifica se o controller', () => {
   const service = new ClienteService();
-  const controller = new ClienteController();
-  let request;
-  let response;
+  const controller = new ClienteController(service);
 
   response.status = stub().returns(response);
   response.json = stub();
+
+  const next = stub();
 
   context('quando chamado com os dados corretos', () => {
     before(() => {
@@ -41,75 +28,10 @@ describe('Verifica se o controller', () => {
     });
 
     it('responde com o token correto', async () => {
-      await controller(request, response);
+      await controller.login(request, response, next);
 
-      expect(response.status.calledWith(OK)).to.be.true;
-      expect(response.json.calledWith({ token: usrToken }));
-    });
-  });
-
-  context('quando chamado sem o dado de cliente', () => {
-    before(() => {
-      request.body = noCodClienteLogin;
-    });
-
-    it('retorna a messagem "Cliente não informado"', async () => {
-      await controller(request, response);
-
-      expect(response.status.calledWith(BAD_REQUEST)).to.be.true;
-      expect(response.json.calledWith({ message: 'Cliente não informado' }));
-    });
-  });
-
-  context('quando chamado sem a senha', () => {
-    before(() => {
-      request.body = noPassworLogin;
-    });
-
-    it('retorna a messagem "Senha não informada', async () => {
-      await controller(request, response);
-
-      expect(response.status.calledWith(BAD_REQUEST)).to.be.true;
-      expect(response.json.calledWith({ message: 'Senha não informada' }));
-    });
-  });
-
-  context('quando chamado com um formato de código de cliente inválido', () => {
-    before(() => {
-      request.body = invalidCodLogin;
-    });
-
-    it('retorna a messagem "Formato de cliente inválido"', async () => {
-      await controller(request, response);
-
-      expect(response.status.calledWith(UNPROCESSABLE_ENTITY)).to.be.true;
-      expect(response.json.calledWith({ message: 'Formato de cliente inválido' }));
-    });
-  });
-
-  context('quando chamado com um formato de senha inválido', () => {
-    before(() => {
-      request.body = invalidPasswordLogin;
-    });
-
-    it('retorna a messagem "Formato de senha inválido"', async () => {
-      await controller(request, response);
-
-      expect(response.status.calledWith(UNPROCESSABLE_ENTITY)).to.be.true;
-      expect(response.json.calledWith({ message: 'Formato de senha inválido' }));
-    });
-  });
-
-  context('quando chamado com uma senha menor do que 8 caracteres', () => {
-    before(() => {
-      request.body = shortPasswordLogin;
-    });
-
-    it('retorna a messagem "A senha deve ter mais de 8 caracteres"', async () => {
-      await controller(request, response);
-
-      expect(response.status.calledWith(UNPROCESSABLE_ENTITY)).to.be.true;
-      expect(response.json.calledWith({ message: 'A senha deve ter mais de 8 caracteres' }));
+      expect((response.status as SinonStub).calledWith(OK)).to.be.true;
+      expect((response.json as SinonStub).calledWith({ token: usrToken }));
     });
   });
 
@@ -121,13 +43,18 @@ describe('Verifica se o controller', () => {
 
     after(() => {
       (service.login as SinonStub).restore();
-    })
+    });
 
-    it('retorna a messagem "Não foi possível efetuar o login. Favor verificar os dados informados"', async () => {
-      await controller(request, response);
+    it('chama o próximo middleware de erro por meio da função next', async () => {
+      await controller.login(request, response, next);
 
-      expect(response.status.calledWith(UNAUTHORIZED)).to.be.true;
-      expect(response.json.calledWith({ message: 'Não foi possível efetuar o login. Favor verificar os dados informados' }));
+      expect(next.called).to.be.true;
+      expect(next.args[0]).to.have.length(1);
+      expect(next.args[0][0]).to.be.an('object');
+      expect(next.args[0][0]).to.have.property('statusCode');
+      expect(next.args[0][0]).to.have.property('message');
+      expect(next.args[0][0].statusCode).to.be.equal(UNAUTHORIZED);
+      expect(next.args[0][0].message).to.be.equal('Não foi possível efetuar o login. Verifique os dados informados');
     });
   });
 });

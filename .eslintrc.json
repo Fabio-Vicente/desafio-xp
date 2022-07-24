@@ -15,7 +15,8 @@
       "@typescript-eslint"
   ],
   "rules": {
-    "import/extensions": 0
+    "import/extensions": 0,
+    "consistent-return": "off"
   },
   "settings": {
       "import/resolver": {
