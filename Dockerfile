@@ -3,7 +3,7 @@ WORKDIR /server
 COPY package.json .
 RUN yarn install
 COPY . .
-CMD ["yarn", "build"]
+RUN yarn build
 
 FROM node:16-alpine
 WORKDIR /
