@@ -6,7 +6,8 @@ build:
   docker:
     web: Dockerfile
 release:
+  image: web
   command:
-    - ./yarn run generate:db
+    - yarn run generate:db
 run:
   web: yarn start;
