@@ -6,6 +6,8 @@ COPY . .
 RUN yarn build
 
 FROM node:16-alpine
-WORKDIR /
-COPY --from=build-stage /server/dist ./
+WORKDIR /server
+COPY package.json .
+RUN yarn install
+COPY --from=build-stage /server/dist ./dist
 CMD ["yarn", "start"]
