@@ -16,7 +16,9 @@
   ],
   "rules": {
     "import/extensions": 0,
-    "consistent-return": "off"
+    "consistent-return": "off",
+    "no-shadow": "off",
+    "@typescript-eslint/no-shadow": ["error"]
   },
   "settings": {
       "import/resolver": {

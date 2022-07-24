@@ -1,22 +1,28 @@
-import { UnauthorizedError } from 'restify-errors';
 import { NextFunction, Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
+import ClienteValidation from '../middlewares';
 import { ClienteService } from '../services';
 
-const { OK } = StatusCodes;
+const { OK, UNAUTHORIZED } = StatusCodes;
 
 export default class ClienteController {
-  private service: ClienteService;
+  private service;
 
-  constructor(service: ClienteService = new ClienteService()) {
+  public validator;
+
+  constructor(
+    service: ClienteService = new ClienteService(),
+    validator: ClienteValidation = new ClienteValidation(),
+  ) {
     this.service = service;
+    this.validator = validator;
   }
 
   async login(req: Request, res: Response, next: NextFunction): Promise<void> {
     const { token, error } = await this.service.login(req.body);
 
     if (error) {
-      return next(new UnauthorizedError('Não foi possível efetuar o login. Verifique os dados informados'));
+      return next({ statusCode: UNAUTHORIZED, message: 'Não foi possível efetuar o login. Verifique os dados informados' });
     }
 
     res.status(OK).json({ token });

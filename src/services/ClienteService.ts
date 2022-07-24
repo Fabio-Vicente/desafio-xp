@@ -5,7 +5,7 @@ import { ClienteModel } from '../database/models';
 import { ILogin, loginReturn } from '../interfaces';
 
 export default class ClienteService {
-  private model: ModelStatic<ClienteModel>
+  private model;
 
   private jwtConfig = {
     expiresIn: '7d',

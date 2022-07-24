@@ -46,7 +46,7 @@ const noPassworLogin = {
 };
 
 const invalidCodLogin = {
-  codCliente: '1',
+  codCliente: 'a',
   senha: 'menteaberta',
 };
 

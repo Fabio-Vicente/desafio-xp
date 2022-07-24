@@ -1,8 +1,8 @@
 import { expect } from 'chai';
 import { stub } from 'sinon';
-import { request } from 'express';
+import { request, response } from 'express';
 import { StatusCodes } from 'http-status-codes';
-import { ClienteValidation } from '../../../src/middlewares'
+import { ClienteValidation } from '../../../src/middlewares';
 import {
   invalidCodLogin,
   invalidPasswordLogin,
@@ -14,6 +14,8 @@ import {
 const { BAD_REQUEST, LENGTH_REQUIRED, UNPROCESSABLE_ENTITY } = StatusCodes;
 
 describe('Verifica se o middleware de validação', () => {
+  const validation = new ClienteValidation();
+
   const next = stub();
 
   context('quando chamado sem o dado de cliente', () => {
@@ -21,12 +23,14 @@ describe('Verifica se o middleware de validação', () => {
       request.body = noCodClienteLogin;
     });
 
+    after(() => next.resetHistory());
+
     it('chama o próximo middleware de erro por meio da função next com o erro apropriado"', () => {
-      ClienteValidation.verifyLogin(request, null, next);
+      validation.verifyLogin(request, response, next);
 
       expect(next.called).to.be.true;
       expect(next.args[0]).to.have.length(1);
-      expect(next.args[0][0]).to.be.an('object');
+      expect(next.args[0][0]).to.be.an('error');
       expect(next.args[0][0]).to.have.property('statusCode');
       expect(next.args[0][0]).to.have.property('message');
       expect(next.args[0][0].statusCode).to.be.equal(BAD_REQUEST);
@@ -39,12 +43,14 @@ describe('Verifica se o middleware de validação', () => {
       request.body = noPassworLogin;
     });
 
+    after(() => next.resetHistory());
+
     it('chama o próximo middleware de erro por meio da função next com o erro apropriado', () => {
-      ClienteValidation.verifyLogin(request, null, next);
+      validation.verifyLogin(request, response, next);
 
       expect(next.called).to.be.true;
       expect(next.args[0]).to.have.length(1);
-      expect(next.args[0][0]).to.be.an('object');
+      expect(next.args[0][0]).to.be.an('error');
       expect(next.args[0][0]).to.have.property('statusCode');
       expect(next.args[0][0]).to.have.property('message');
       expect(next.args[0][0].statusCode).to.be.equal(BAD_REQUEST);
@@ -57,12 +63,14 @@ describe('Verifica se o middleware de validação', () => {
       request.body = invalidCodLogin;
     });
 
+    after(() => next.resetHistory());
+
     it('chama o próximo middleware de erro por meio da função next com o erro apropriado', () => {
-      ClienteValidation.login(request, null, next);
+      validation.verifyLogin(request, response, next);
 
       expect(next.called).to.be.true;
       expect(next.args[0]).to.have.length(1);
-      expect(next.args[0][0]).to.be.an('object');
+      expect(next.args[0][0]).to.be.an('error');
       expect(next.args[0][0]).to.have.property('statusCode');
       expect(next.args[0][0]).to.have.property('message');
       expect(next.args[0][0].statusCode).to.be.equal(UNPROCESSABLE_ENTITY);
@@ -75,12 +83,14 @@ describe('Verifica se o middleware de validação', () => {
       request.body = invalidPasswordLogin;
     });
 
+    after(() => next.resetHistory());
+
     it('chama o próximo middleware de erro por meio da função next com o erro apropriado', () => {
-      ClienteValidation.login(request, null, next);
+      validation.verifyLogin(request, response, next);
 
       expect(next.called).to.be.true;
       expect(next.args[0]).to.have.length(1);
-      expect(next.args[0][0]).to.be.an('object');
+      expect(next.args[0][0]).to.be.an('error');
       expect(next.args[0][0]).to.have.property('statusCode');
       expect(next.args[0][0]).to.have.property('message');
       expect(next.args[0][0].statusCode).to.be.equal(UNPROCESSABLE_ENTITY);
@@ -93,12 +103,14 @@ describe('Verifica se o middleware de validação', () => {
       request.body = shortPasswordLogin;
     });
 
+    after(() => next.resetHistory());
+
     it('chama o próximo middleware de erro por meio da função next com o erro apropriado', () => {
-      ClienteValidation.login(request, null, next);
+      validation.verifyLogin(request, response, next);
 
       expect(next.called).to.be.true;
       expect(next.args[0]).to.have.length(1);
-      expect(next.args[0][0]).to.be.an('object');
+      expect(next.args[0][0]).to.be.an('error');
       expect(next.args[0][0]).to.have.property('statusCode');
       expect(next.args[0][0]).to.have.property('message');
       expect(next.args[0][0].statusCode).to.be.equal(LENGTH_REQUIRED);
