@@ -8,6 +8,7 @@ RUN yarn build
 FROM node:16-alpine
 WORKDIR /server
 COPY package.json .
+COPY .env .
 COPY .sequelizerc .
 RUN yarn install
 COPY --from=build-stage /server/dist ./dist
