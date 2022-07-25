@@ -160,11 +160,11 @@ describe('Verifica se a requisição da compra de um ativo', () => {
       expect(response).to.have.status(NOT_ACCEPTABLE);
     });
 
-    it('retorna uma resposta com o id da operação e o valor atualizado do ativo na carteira', () => {
+    it('retorna uma resposta ""não há ativos suficientes para compra"', () => {
       expect(response.body).to.be.an('object');
       expect(response.body).to.have.property('messages');
       expect(response.body.message).to.be.a('string');
-      expect(response.body).to.be.deep.equal({ message: 'não há ativos suficientes para compra' });
+      expect(response.body).to.be.deep.equal({ message: 'Não há ativos suficientes para compra' });
     });
   });
 

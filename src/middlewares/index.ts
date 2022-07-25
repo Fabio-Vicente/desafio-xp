@@ -1,9 +1,9 @@
-import ClienteValidation from './ClienteValidation';
+import LoginValidator from './LoginValidator';
+import OperacaoValidator from './OperacaoValidator';
 import ErrorMiddleware from './ErrorMiddleware';
 
-export default ClienteValidation;
-
 export {
-  ClienteValidation,
+  LoginValidator,
+  OperacaoValidator,
   ErrorMiddleware,
 };

@@ -1,7 +1,7 @@
 import ClienteController from './ClienteController';
-
-export default ClienteController;
+import OperacaoController from './OperacaoController';
 
 export {
   ClienteController,
+  OperacaoController,
 };

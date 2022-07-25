@@ -9,7 +9,7 @@ import db from '..';
 
 import { ICliente } from '../../interfaces';
 import CarteiraModel from './CarteiraModel';
-import OperacaoModel from './OperacoesModel';
+import OperacaoModel from './OperacaoModel';
 
 class ClienteModel extends Model implements ICliente {
   codCliente!: number;
@@ -34,15 +34,16 @@ ClienteModel.init({
   saldo: DECIMAL(20, 2),
 }, {
   sequelize: db,
+  modelName: 'Cliente',
   tableName: 'Clientes',
   underscored: true,
   timestamps: false,
 });
 
-CarteiraModel.belongsTo(ClienteModel, { foreignKey: 'id_cliente', as: 'Cliente' });
-OperacaoModel.belongsTo(ClienteModel, { foreignKey: 'id_cliente', as: 'Cliente' });
+CarteiraModel.belongsTo(ClienteModel, { foreignKey: 'cod_cliente', as: 'Cliente' });
+OperacaoModel.belongsTo(ClienteModel, { foreignKey: 'cod_cliente', as: 'Cliente' });
 
-ClienteModel.hasMany(CarteiraModel, { foreignKey: 'id_cliente', as: 'Carteiras' });
-ClienteModel.hasMany(OperacaoModel, { foreignKey: 'id_cliente', as: 'Operacoes' });
+ClienteModel.hasMany(CarteiraModel, { foreignKey: 'cod_cliente', as: 'Carteiras' });
+ClienteModel.hasMany(OperacaoModel, { foreignKey: 'cod_cliente', as: 'Operacoes' });
 
 export default ClienteModel;

@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
-import ClienteValidation from '../middlewares';
+import { LoginValidator } from '../middlewares';
 import { ClienteService } from '../services';
 
 const { OK, UNAUTHORIZED } = StatusCodes;
@@ -8,18 +8,18 @@ const { OK, UNAUTHORIZED } = StatusCodes;
 export default class ClienteController {
   private service;
 
-  public validator;
+  public loginValidator;
 
   constructor(
     service: ClienteService = new ClienteService(),
-    validator: ClienteValidation = new ClienteValidation(),
+    validator: LoginValidator = new LoginValidator(),
   ) {
     this.service = service;
-    this.validator = validator;
+    this.loginValidator = validator;
     this.login = this.login.bind(this);
   }
 
-  async login(req: Request, res: Response, next: NextFunction): Promise<void> {
+  public async login(req: Request, res: Response, next: NextFunction): Promise<void> {
     const { token, error } = await this.service.login(req.body);
 
     if (error) {

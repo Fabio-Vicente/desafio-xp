@@ -1,4 +1,9 @@
-import { Model, BIGINT } from 'sequelize';
+import {
+  Model,
+  STRING,
+  BIGINT,
+  INTEGER,
+} from 'sequelize';
 import db from '..';
 
 class CarteiraModel extends Model {
@@ -6,10 +11,19 @@ class CarteiraModel extends Model {
 }
 
 CarteiraModel.init({
+  codCliente: {
+    primaryKey: true,
+    type: STRING(6),
+  },
+  codAtivo: {
+    primaryKey: true,
+    type: INTEGER,
+  },
   qtde: BIGINT,
 }, {
   sequelize: db,
   modelName: 'Carteira',
+  tableName: 'Carteira',
   underscored: true,
   timestamps: false,
 });
