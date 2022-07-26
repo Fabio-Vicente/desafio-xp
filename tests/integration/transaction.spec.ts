@@ -37,16 +37,16 @@ let response;
 describe('Verifica se a requisição da compra de um ativo', () => {
   context('quando realizada de forma correta e para um ativo já existente na carteira', () => {
     before(async () => {
-      response = await chai
-        .request(server)
-        .post('/investimento/comprar')
-        .send(transaction)
-        .set('authorization', usrToken);
       stub(AtivoModel, 'findOne').resolves(availableAssets);
       stub(AtivoModel, 'update').resolves();
       stub(OperacaoModel, 'create').resolves(insertedTransaction);
       stub(CarteiraModel, 'findOne').resolves(oldPortfolio);
       stub(CarteiraModel, 'update').resolves(updatedPortfolio);
+      response = await chai
+        .request(server)
+        .post('/investimento/comprar')
+        .send(transaction)
+        .set('authorization', usrToken);
     });
 
     after(() => {
@@ -92,16 +92,16 @@ describe('Verifica se a requisição da compra de um ativo', () => {
 
   context('quando realizada de forma correta para um ativo não existente na carteira', () => {
     before(async () => {
-      response = await chai
-        .request(server)
-        .post('/investimento/comprar')
-        .send(transaction)
-        .set('authorization', usrToken);
       stub(AtivoModel, 'findOne').resolves(availableAssets);
       stub(AtivoModel, 'update').resolves();
       stub(OperacaoModel, 'create').resolves(insertedTransaction);
       stub(CarteiraModel, 'findOne').resolves(noPortfolio);
       stub(CarteiraModel, 'create').resolves(updatedPortfolio);
+      response = await chai
+        .request(server)
+        .post('/investimento/comprar')
+        .send(transaction)
+        .set('authorization', usrToken);
     });
 
     after(() => {
@@ -146,12 +146,12 @@ describe('Verifica se a requisição da compra de um ativo', () => {
 
   context('quando não existe a quantidade de ativos solicitada disponível para comprar', () => {
     before(async () => {
+      stub(AtivoModel, 'findOne').resolves(unavailableAssets);
       response = await chai
         .request(server)
         .post('/investimento/comprar')
         .send(transaction)
         .set('authorization', usrToken);
-      stub(AtivoModel, 'findOne').resolves(unavailableAssets);
     });
 
     after(() => { AtivoModel.findOne.restore(); });
@@ -160,11 +160,11 @@ describe('Verifica se a requisição da compra de um ativo', () => {
       expect(response).to.have.status(NOT_ACCEPTABLE);
     });
 
-    it('retorna uma resposta com o id da operação e o valor atualizado do ativo na carteira', () => {
+    it('retorna uma resposta ""não há ativos suficientes para compra"', () => {
       expect(response.body).to.be.an('object');
       expect(response.body).to.have.property('messages');
       expect(response.body.message).to.be.a('string');
-      expect(response.body).to.be.deep.equal({ message: 'não há ativos suficientes para compra' });
+      expect(response.body).to.be.deep.equal({ message: 'Não há ativos suficientes para compra' });
     });
   });
 
@@ -276,15 +276,15 @@ describe('Verifica se a requisição da compra de um ativo', () => {
 describe('Verifica se a requisição da venda de um ativo', () => {
   context('quando realizada de forma correta', () => {
     before(async () => {
+      stub(CarteiraModel, 'findOne').resolves(oldPortfolio);
+      stub(OperacaoModel, 'create').resolves(insertedTransaction);
+      stub(CarteiraModel, 'update').resolves(updatedPortfolio);
+      stub(AtivoModel, 'update').resolves();
       response = await chai
         .request(server)
         .post('/investimento/vender')
         .send(transaction)
         .set('authorization', usrToken);
-      stub(CarteiraModel, 'findOne').resolves(oldPortfolio);
-      stub(OperacaoModel, 'create').resolves(insertedTransaction);
-      stub(CarteiraModel, 'update').resolves(updatedPortfolio);
-      stub(AtivoModel, 'update').resolves();
     });
 
     after(() => {
@@ -329,12 +329,12 @@ describe('Verifica se a requisição da venda de um ativo', () => {
 
   context('quando não existe na carteira do cliente', () => {
     before(async () => {
+      stub(CarteiraModel, 'findOne').resolves(noPortfolio);
       response = await chai
         .request(server)
         .post('/investimento/vender')
         .send(transaction)
         .set('authorization', usrToken);
-      stub(CarteiraModel, 'findOne').resolves(noPortfolio);
     });
 
     after(() => {
@@ -355,12 +355,12 @@ describe('Verifica se a requisição da venda de um ativo', () => {
 
   context('quando não há a quantidade de ativos suficientes para realizar a venda', () => {
     before(async () => {
+      stub(CarteiraModel, 'findOne').resolves(unsuficientPortfolio);
       response = await chai
         .request(server)
         .post('/investimento/vender')
         .send(transaction)
         .set('authorization', usrToken);
-      stub(CarteiraModel, 'findOne').resolves(unsuficientPortfolio);
     });
 
     after(() => {

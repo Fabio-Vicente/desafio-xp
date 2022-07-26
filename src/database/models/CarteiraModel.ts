@@ -1,15 +1,29 @@
-import { Model, DECIMAL } from 'sequelize';
-import db from '.';
+import {
+  Model,
+  STRING,
+  BIGINT,
+  INTEGER,
+} from 'sequelize';
+import db from '..';
 
 class CarteiraModel extends Model {
-  valor!: number;
+  qtde!: number;
 }
 
 CarteiraModel.init({
-  valor: DECIMAL(20, 2),
+  codCliente: {
+    primaryKey: true,
+    type: STRING(6),
+  },
+  codAtivo: {
+    primaryKey: true,
+    type: INTEGER,
+  },
+  qtde: BIGINT,
 }, {
   sequelize: db,
   modelName: 'Carteira',
+  tableName: 'Carteira',
   underscored: true,
   timestamps: false,
 });

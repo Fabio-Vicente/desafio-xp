@@ -26,13 +26,13 @@ let response;
 describe('Verifica se a requisição para saque pelo cliente', () => {
   context('quando realizada de forma correta', () => {
     before(async () => {
+      stub(ClienteModel, 'findOne').resolves(costumer);
+      stub(ClienteModel, 'update').resolves(withdrawCostumer);
       response = await chai
         .request(server)
         .post('/conta/saque')
         .send(transaction)
         .set('authorization', usrToken);
-      stub(ClienteModel, 'findOne').resolves(costumer);
-      stub(ClienteModel, 'update').resolves(withdrawCostumer);
     });
 
     after(() => {
@@ -102,13 +102,13 @@ describe('Verifica se a requisição para saque pelo cliente', () => {
 describe('Verifica se a requisição para depósito pelo cliente', () => {
   context('quando realizada de forma correta', () => {
     before(async () => {
+      stub(ClienteModel, 'findOne').resolves(costumer);
+      stub(ClienteModel, 'update').resolves(depositCostumer);
       response = await chai
         .request(server)
         .post('/conta/deposito')
         .send(transaction)
         .set('authorization', usrToken);
-      stub(ClienteModel, 'findOne').resolves(costumer);
-      stub(ClienteModel, 'update').resolves(depositCostumer);
     });
 
     after(() => {
@@ -178,8 +178,8 @@ describe('Verifica se a requisição para depósito pelo cliente', () => {
 describe('Verifica se a requisição para saldo do cliente', () => {
   context('quando realizada de forma correta', () => {
     before(async () => {
-      response = await chai.request(server).get('/conta/1').set('authorization', usrToken);
       stub(ClienteModel, 'findOne').resolves(costumer);
+      response = await chai.request(server).get('/conta/1').set('authorization', usrToken);
     });
 
     after(() => {

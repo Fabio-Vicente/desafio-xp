@@ -1,17 +1,14 @@
 FROM node:16-alpine as build-stage
-
 WORKDIR /server
-
 COPY package.json .
-
 RUN yarn install
-
 COPY . .
-
-CMD ["yarn", "prestart"]
+RUN yarn build
 
 FROM node:16-alpine
-
-COPY --from=build-stage /server/dist /
-
+WORKDIR /server
+COPY package.json .
+COPY .sequelizerc .
+RUN yarn install
+COPY --from=build-stage /server/dist ./dist
 CMD ["yarn", "start"]

@@ -1,0 +1,7 @@
+{
+  "conventionalCommits.scopes": [
+    "Cliente",
+    "Implement POST '/investimento/comprar' endpoint",
+    "Operacoes"
+  ]
+}
